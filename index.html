@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roshirl Ramirez Grocery Hub</title>
+    <meta name="description" content="Your Daily Needs, Delivered with Care. Roshirl Ramirez Grocery Hub is Antipolo’s trusted local grocery for families, students, and small business owners.">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,900|Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1d6a44;
+            --secondary: #36d574;
+            --accent: #ffffff;
+            --navy: #22305e;
+            --cart-green: #eafbe5;
+            --footer-bg: #22305e;
+            --footer-accent: #36d574;
+            --danger: #e74c3c;
+            --info: #36b1ff;
+            --border-radius: 16px;
+            --shadow-card: 0 5px 24px rgba(34, 48, 94, 0.13);
+            --shadow-hover: 0 10px 32px rgba(34, 48, 94, 0.23);
+            --gradient-main: linear-gradient(120deg, #36d574 0%, #c7f9e2 100%);
+            --gradient-hero: radial-gradient(circle at 70% 50%, #36d574 0%, #aaffd8 100%);
+            --gradient-footer: linear-gradient(90deg, #22305e 0%, #1d6a44 100%);
+            --cart-btn-size: 65px;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4fff7;
+            color: var(--navy);
+        }
+        header {
+            background: var(--accent);
+            box-shadow: 0 2px 8px rgba(34,48,94,0.09);
+            padding: 0;
+            margin: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: box-shadow 0.2s;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 1.3rem;
+            padding: 0.8rem 0;
+        }
+        .logo-block img {
+            height: 72px;
+            width: 72px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: #eafbe5;
+            border: 3px solid var(--secondary);
+            box-shadow: 0 4px 14px rgba(54,213,116,0.10);
+        }
+        .logo-text {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 900;
+            color: var(--navy);
+            font-size: 2rem;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            transition: max-height 0.25s, opacity 0.25s;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--primary);
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.08rem;
+            letter-spacing: 0.2px;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-links a:hover,
+        .nav-links a:focus {
+            color: var(--secondary);
+        }
+        .nav-links a.active {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        /* Floating Cart Button */
+        .cart-float-btn {
+            position: fixed;
+            right: 32px;
+            bottom: 32px;
+            z-index: 3000;
+            width: var(--cart-btn-size);
+            height: var(--cart-btn-size);
+            background: var(--secondary);
+            color: var(--navy);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 6px 18px rgba(54,213,116,0.21);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1em;
+            transition: background 0.2s, transform 0.22s;
+        }
+        .cart-float-btn:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: scale(1.08);
+        }
+        .cart-float-btn .cart-count {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            color: #fff;
+            font-size: 0.89em;
+            font-weight: 700;
+            border-radius: 50%;
+            padding: 2px 8px;
+            box-shadow: 0 0 4px rgba(231,76,60,0.18);
+            pointer-events: none;
+        }
+        @media (max-width: 600px) {
+            .cart-float-btn {
+                right: 16px;
+                bottom: 16px;
+                width: 54px;
+                height: 54px;
+                font-size: 1.55em;
+            }
+            .cart-float-btn .cart-count {
+                top: 5px;
+                right: 5px;
+                padding: 2px 7px;
+            }
+        }
+        /* Burger button style */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 46px;
+            height: 46px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+        .burger span {
+            display: block;
+            width: 30px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            margin: 4px 0;
+            transition: all 0.3s;
+        }
+        @media (max-width: 900px) {
+            .nav {
+                flex-direction: row;
+                align-items: center;
+                position: relative;
+            }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--accent);
+                flex-direction: column;
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+                box-shadow: 0 4px 24px rgba(34,48,94,0.13);
+                border-bottom-left-radius: var(--border-radius);
+                border-bottom-right-radius: var(--border-radius);
+                z-index: 101;
+            }
+            .nav-links.open {
+                max-height: 700px;
+                opacity: 1;
+                padding: 1.2rem 0.5rem;
+            }
+            .nav-links a {
+                padding: 0.7em 0;
+                font-size: 1.07rem;
+            }
+            .burger {
+                display: flex;
+            }
+            .logo-block img {
+                height: 58px;
+                width: 58px;
+            }
+            .logo-text {
+                font-size: 1.32rem;
+            }
+        }
+        .burger.open span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .burger.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .burger.open span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        /* Section Styles */
+        section {
+            margin-bottom: 2.5rem;
+        }
+        .section-title {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 900;
+            font-size: 1.7rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+        .section-content {
+            font-size: 1.12rem;
+            color: var(--navy);
+            margin-bottom: 0.7rem;
+            text-align: left;
+            line-height: 1.7;
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 1.3em 1em;
+        }
+        .section-content ul,
+        .section-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        .section-content strong {
+            color: var(--primary);
+        }
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-hero);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 26px rgba(34,48,94,0.07);
+            margin: 2rem auto 1.7rem auto;
+            text-align: center;
+            padding: 2.6rem 1.2rem 2.2rem 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 180px;
+            height: 180px;
+            background: var(--secondary);
+            opacity: 0.18;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .hero-title {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 900;
+            font-size: 2.7rem;
+            color: var(--navy);
+            margin-bottom: 0.3em;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-desc {
+            font-size: 1.32rem;
+            margin-bottom: 1em;
+            color: var(--primary);
+            position: relative;
+            z-index: 1;
+        }
+        .hero-tagline {
+            background: var(--primary);
+            color: var(--accent);
+            display: inline-block;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 1.13rem;
+            letter-spacing: 0.3px;
+            padding: 0.65em 2em;
+            border-radius: var(--border-radius);
+            margin-top: 0.4em;
+            box-shadow: 0 1px 8px rgba(34,48,94,0.11);
+            position: relative;
+            z-index: 1;
+        }
+        /* Products Section */
+        .products-section {
+            margin: 2rem 0 1.2rem 0;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2.2rem;
+        }
+        .product-card {
+            background: var(--accent);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.22s, transform 0.22s;
+            position: relative;
+        }
+        .product-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-6px) scale(1.025);
+        }
+        .product-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            background: #eafbe5;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px rgba(54,213,116,0.10);
+        }
+        .product-title {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 1.16rem;
+            margin-bottom: 0.35em;
+            color: var(--primary);
+            text-align: center;
+        }
+        .product-desc {
+            font-size: 1.04rem;
+            margin-bottom: 0.5em;
+            color: var(--navy);
+            text-align: center;
+        }
+        .product-meta {
+            font-size: 1.03rem;
+            color: var(--secondary);
+            margin-bottom: 0.5em;
+        }
+        .add-cart-btn {
+            background: var(--info);
+            color: var(--accent);
+            border: none;
+            border-radius: 7px;
+            padding: 0.7em 1.7em;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            margin-top: 0.8em;
+            font-size: 1.09em;
+            box-shadow: 0 2px 12px rgba(54,213,116,0.10);
+            transition: background 0.22s, color 0.22s;
+        }
+        .add-cart-btn:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        /* Cart Popup Modal */
+        .cart-modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(34, 48, 94, 0.12);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-modal-bg.active {
+            display: flex;
+        }
+        .cart-modal {
+            background: var(--cart-green);
+            border-radius: var(--border-radius);
+            box-shadow: 0 18px 38px rgba(34,48,94,0.19);
+            padding: 2rem 1.5rem;
+            min-width: 320px;
+            max-width: 90vw;
+            position: relative;
+            animation: fadeIn 0.33s;
+        }
+        .cart-modal-title {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.33rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.1em;
+            text-align: center;
+        }
+        .cart-modal-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1em 0;
+        }
+        .cart-modal-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.7em;
+            font-size: 1rem;
+            border-bottom: 1px dashed #94d8c7;
+            padding-bottom: 0.4em;
+        }
+        .cart-modal-list li span {
+            margin-right: 1em;
+        }
+        .cart-modal-total {
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 1.2em;
+            font-size: 1.17em;
+            text-align: right;
+        }
+        .cart-modal-btns {
+            text-align: right;
+        }
+        .close-cart-modal {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: var(--danger);
+            color: var(--accent);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.1em;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .close-cart-modal:hover {
+            background: var(--navy);
+        }
+        .checkout-btn-modal {
+            background: var(--navy);
+            color: var(--accent);
+            border: none;
+            border-radius: 7px;
+            padding: 0.7em 2em;
+            font-weight: 700;
+            font-size: 1.05em;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(34,48,94,0.09);
+            transition: background 0.2s;
+            margin-left: 1em;
+        }
+        .checkout-btn-modal:hover {
+            background: var(--secondary);
+            color: var(--navy);
+        }
+        /* Footer Styles */
+        footer {
+            background: var(--gradient-footer);
+            color: var(--accent);
+            padding: 2.5rem 1rem 1.2rem 1rem;
+            margin-top: 2.2rem;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+        }
+        .footer-main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-info {
+            flex: 2;
+            min-width: 220px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.7em;
+        }
+        .footer-logo img {
+            height: 45px;
+            width: 45px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: var(--footer-accent);
+            border: 2px solid var(--accent);
+        }
+        .footer-logo-text {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 900;
+            font-size: 1.18rem;
+            color: var(--accent);
+        }
+        .footer-links {
+            flex: 1;
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .footer-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--footer-accent);
+        }
+        .footer-meta {
+            font-size: 0.93rem;
+            color: #e0e0e0;
+            margin-top: 1rem;
+        }
+        @media (max-width: 900px) {
+            .footer-main {
+                flex-direction: column;
+                gap: 1.3rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+            .hero-title {
+                font-size: 1.32rem;
+            }
+            .section-title {
+                font-size: 1.09rem;
+            }
+            .product-card img {
+                width: 80px;
+                height: 80px;
+            }
+            .cart-modal {
+                min-width: 90vw;
+                padding: 1.2rem 0.6rem;
+            }
+            footer {
+                padding: 1.2rem 0.5rem 0.8rem 0.5rem;
+            }
+        }
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.7s ease;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="container nav">
+            <div class="logo-block">
+                <img src="image/LOGO.png" alt="Roshirl Ramirez Grocery Hub Logo">
+                <span class="logo-text">ROSHIRL RAMIREZ<br><span style="font-size: 1.05rem; font-weight: 700; color: var(--secondary); letter-spacing: 0.5px;">GROCERY HUB ONLINE</span></span>
+            </div>
+            <button class="burger" id="burgerBtn" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="nav-links" id="navLinks">
+                <a href="#hero" id="navHome" class="active">Home</a>
+                <a href="#aboutus" id="navAbout">About Us</a>
+                <a href="#productsservices" id="navProducts">Products & Services</a>
+                <a href="#deliveryinfo" id="navDelivery">Delivery Info</a>
+                <a href="#faq" id="navFAQ">FAQ</a>
+                <a href="#contact" id="navContact">Contact</a>
+                <a href="#testimonials" id="navTestimonials">Testimonials</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container fade-in">
+            <!-- Hero Section -->
+            <section class="hero-section" id="hero">
+                <div class="hero-title">Welcome to Roshirl Ramirez Grocery Hub</div>
+                <div class="hero-desc">Your Daily Needs, Delivered with Care.</div>
+                <span class="hero-tagline">🛒 Maginhawa. Magaan. Mapagkakatiwalaan.<br>That’s the Roshirl promise!</span>
+            </section>
+            <!-- About Us Section -->
+            <section id="aboutus">
+                <div class="section-title">About Us</div>
+                <div class="section-content">
+                    <strong>Our Story:</strong> From Barangay Roots to Community Staple<br>
+                    Roshirl Ramirez Grocery Hub began as a modest tindahan in Barangay San Roque in 2019. Built on the foundation of honest service and community care, we've grown into a trusted local grocery that serves families, students, and small business owners in and around Antipolo.<br><br>
+                    We’re proud to be Filipino-owned and focused on providing affordable, everyday necessities without compromising on quality. Every item on our shelves reflects our commitment to value, local sourcing, and serbisyong may puso.<br><br>
+                    <strong>Our Mission:</strong><br>
+                    To provide accessible, high-quality goods that support the daily lives of our customers and uplift the local economy.<br><br>
+                    <strong>Our Values:</strong>
+                    <ul>
+                        <li>Tapat na Serbisyo</li>
+                        <li>Suporta sa Lokal</li>
+                        <li>Malinis at Organisadong Pamamalengke</li>
+                    </ul>
+                </div>
+            </section>
+            <!-- Products & Services Section -->
+            <section class="products-section" id="productsservices">
+                <div class="section-title">Products & Services</div>
+                <div class="section-content">
+                    <strong>🌽 Fresh Produce & Meat</strong>
+                    <ul>
+                        <li>Seasonal gulay (vegetables) from Benguet and local farms</li>
+                        <li>Fruits sourced from Batangas, Davao</li>
+                        <li>Fresh meat and poultry (pork, chicken, ground beef)</li>
+                    </ul>
+                    <strong>🍚 Grocery Essentials</strong>
+                    <ul>
+                        <li>Bigas, canned goods, noodles</li>
+                        <li>Spices, sauces, and condiments</li>
+                        <li>Local snacks like chichirya, banana chips</li>
+                    </ul>
+                    <strong>🧼 Household and Personal Care</strong>
+                    <ul>
+                        <li>Laundry detergents, dishwashing liquids</li>
+                        <li>Bath soaps, shampoos, feminine hygiene products</li>
+                    </ul>
+                    <strong>👶 Baby Needs</strong>
+                    <ul>
+                        <li>Diapers, wipes, infant formula, baby food</li>
+                    </ul>
+                    <strong>📦 Store Services</strong>
+                    <ul>
+                        <li>Load selling: Globe, Smart, DITO</li>
+                        <li>Bills payment center</li>
+                        <li>GCash and Maya payments accepted</li>
+                        <li>Refill station for cooking oil and condiments</li>
+                    </ul>
+                    <div>Affordable prices. Honest service. Everything you need in one convenient place.</div>
+                </div>
+                <h2 style="font-size:1.2rem; color:var(--navy); text-align:center; margin:2em 0 1.2em 0; font-family:'Montserrat',Arial,sans-serif;">Featured Products</h2>
+                <div class="products-grid">
+                    <!-- PRODUCT 1 -->
+                    <div class="product-card">
+                        <img src="image/placeholder-1.png" alt="Fresh Tomatoes">
+                        <div class="product-title">Fresh Tomatoes</div>
+                        <div class="product-desc">Locally grown, ripe, and juicy. Perfect for salads and cooking.</div>
+                        <div class="product-meta">Qty: 18 | Price: ₱30.99</div>
+                        <button class="add-cart-btn" onclick="addToCart('Fresh Tomatoes', 30.99)">Add to Cart</button>
+                    </div>
+                    <!-- PRODUCT 2 -->
+                    <div class="product-card">
+                        <img src="image/placeholder-2.png" alt="Premium Rice">
+                        <div class="product-title">Premium Rice (Bigas)</div>
+                        <div class="product-desc">Soft, fluffy, and aromatic. Trusted by families in Antipolo.</div>
+                        <div class="product-meta">Qty: 12 | Price: ₱49.50</div>
+                        <button class="add-cart-btn" onclick="addToCart('Premium Rice', 49.50)">Add to Cart</button>
+                    </div>
+                    <!-- PRODUCT 3 -->
+                    <div class="product-card">
+                        <img src="image/placeholder-3.png" alt="Laundry Detergent">
+                        <div class="product-title">Laundry Detergent</div>
+                        <div class="product-desc">Removes tough stains. Gentle on clothes and hands.</div>
+                        <div class="product-meta">Qty: 7 | Price: ₱55.25</div>
+                        <button class="add-cart-btn" onclick="addToCart('Laundry Detergent', 55.25)">Add to Cart</button>
+                    </div>
+                    <!-- PRODUCT 4 -->
+                    <div class="product-card">
+                        <img src="image/placeholder-4.png" alt="Banana Chips">
+                        <div class="product-title">Banana Chips</div>
+                        <div class="product-desc">Crunchy, sweet snack. Perfect for merienda or pasalubong!</div>
+                        <div class="product-meta">Qty: 15 | Price: ₱25.00</div>
+                        <button class="add-cart-btn" onclick="addToCart('Banana Chips', 25.00)">Add to Cart</button>
+                    </div>
+                    <!-- PRODUCT 5 -->
+                    <div class="product-card">
+                        <img src="image/placeholder-5.png" alt="Infant Formula">
+                        <div class="product-title">Infant Formula</div>
+                        <div class="product-desc">Nutritious and safe for your baby’s growth and development.</div>
+                        <div class="product-meta">Qty: 9 | Price: ₱410.00</div>
+                        <button class="add-cart-btn" onclick="addToCart('Infant Formula', 410.00)">Add to Cart</button>
+                    </div>
+                </div>
+            </section>
+            <!-- Cart Section (hidden, popup only) -->
+            <section class="cart-section" id="cartSection" style="display:none;"></section>
+            <!-- Delivery Info Section -->
+            <section id="deliveryinfo">
+                <div class="section-title">Delivery Information</div>
+                <div class="section-content">
+                    <strong>Need Groceries Delivered?</strong> <br>
+                    We now offer same-day delivery for selected barangays in Antipolo!<br><br>
+                    <strong>📦 Covered Areas:</strong>
+                    <ul>
+                        <li>Barangay San Roque</li>
+                        <li>Barangay Dalig</li>
+                        <li>Barangay Cupang</li>
+                        <li>Mayamot and Mambugan areas</li>
+                    </ul>
+                    <strong>🕐 Delivery Hours:</strong>
+                    <ul>
+                        <li>Monday to Saturday – 10:00 AM to 5:00 PM</li>
+                        <li>Cut-off for same-day delivery: 1:00 PM</li>
+                    </ul>
+                    <strong>📱 Order via Facebook Messenger or SMS</strong><br>
+                    Phone/Viber: +63 959 183 7266<br>
+                    Payment: GCash or Cash on Delivery<br>
+                    Order now para iwas pila at hassle-free ang pamimili!
+                </div>
+            </section>
+            <!-- FAQ Section -->
+            <section id="faq">
+                <div class="section-title">Frequently Asked Questions</div>
+                <div class="section-content">
+                    <strong>Q: Do you accept credit or debit cards?</strong><br>
+                    Currently, we accept GCash and Maya payments. Card payments will be available soon.<br><br>
+                    <strong>Q: Can I place bulk orders?</strong><br>
+                    Yes! We accommodate wholesale orders for sari-sari stores and community feeding programs. Just message or call us.<br><br>
+                    <strong>Q: Do you offer special discounts for senior citizens and PWDs?</strong><br>
+                    Yes. Please present your valid ID upon payment.<br><br>
+                    <strong>Q: Do you offer refills for condiments or oil?</strong><br>
+                    Yes, we have refill stations for cooking oil, suka, and toyo. Bring your own container!
+                </div>
+            </section>
+            <!-- Contact Section -->
+            <section id="contact">
+                <div class="section-title">Contact Us</div>
+                <div class="section-content">
+                    <strong>Contact Roshirl Ramirez Grocery Hub</strong><br>
+                    We’re happy to assist you with your grocery needs or inquiries.<br><br>
+                    <strong>📍 Store Address:</strong><br>
+                    #37 Ligaya Street, Barangay San Roque<br>
+                    City of Antipolo, Rizal, Region IV-A, Philippines<br>
+                    Postal Code: 1870<br><br>
+                    <strong>📞 Phone:</strong> <a href="tel:+639591837266" style="color:var(--primary);text-decoration:underline;">+63 959 183 7266</a><br>
+                    <strong>📧 Email:</strong> <a href="mailto:info@roshirlramirezgrocery.com" style="color:var(--primary);text-decoration:underline;">info@roshirlramirezgrocery.com</a><br>
+                    <strong>🌐 Website:</strong> <a href="https://www.roshirlramirezgrocery.com" target="_blank" style="color:var(--primary);text-decoration:underline;">www.roshirlramirezgrocery.com</a><br><br>
+                    <strong>🕘 Store Hours:</strong><br>
+                    Monday to Saturday – 7:30 AM to 6:00 PM<br>
+                    Sunday – 8:00 AM to 1:00 PM<br><br>
+                    <strong>📱 Follow us on Facebook and Instagram</strong><br>
+                    <a href="https://facebook.com/roshirlgroceryhub" target="_blank" style="color:var(--secondary);">Facebook</a> | <a href="https://instagram.com/roshirlgroceryhub" target="_blank" style="color:var(--secondary);">Instagram</a>
+                </div>
+            </section>
+            <!-- Testimonials Section -->
+            <section id="testimonials">
+                <div class="section-title">Testimonials</div>
+                <div class="section-content">
+                    <strong>Customer Feedback</strong>
+                    <ul>
+                        <li>“Laging maayos at kumpleto dito. Hindi mo na kailangan pumunta ng palengke!”<br><span style="color:var(--secondary);font-weight:600;">— Mang Berting, San Roque</span></li>
+                        <li>“Staff are friendly and the store is always clean. I get all my weekly needs here.”<br><span style="color:var(--secondary);font-weight:600;">— Maica R., Antipolo</span></li>
+                        <li>“Mura na, malapit pa. Suki na talaga kami!”<br><span style="color:var(--secondary);font-weight:600;">— Dennis & Clara, Brgy. Cupang</span></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Floating Cart Button -->
+    <button class="cart-float-btn" id="cartFloatBtn" aria-label="Keranjang">
+        <span>&#128722;</span>
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <!-- Cart Popup Modal -->
+    <div class="cart-modal-bg" id="cartModalBg" aria-modal="true" aria-labelledby="cartModalTitle">
+        <div class="cart-modal" id="cartModal">
+            <button class="close-cart-modal" id="closeCartModal" aria-label="Tutup">&#10005;</button>
+            <div class="cart-modal-title" id="cartModalTitle">🛒 Your Cart</div>
+            <ul class="cart-modal-list" id="cartModalList">
+                <!-- Cart items will appear here -->
+            </ul>
+            <div class="cart-modal-total" id="cartModalTotal">Total: ₱0.00</div>
+            <div class="cart-modal-btns">
+                <button class="checkout-btn-modal" id="checkoutBtnModal">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-main">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="image/LOGO.png" alt="Roshirl Ramirez Grocery Hub Logo">
+                    <span class="footer-logo-text">ROSHIRL RAMIREZ GROCERY HUB</span>
+                </div>
+                <div>
+                    #37 Ligaya Street, Barangay San Roque, Antipolo, Rizal 1870<br>
+                    Phone: <a href="tel:+639591837266" style="color:var(--footer-accent); text-decoration:underline;">+63 959 183 7266</a><br>
+                    Email: <a href="mailto:info@roshirlramirezgrocery.com" style="color:var(--footer-accent); text-decoration:underline;">info@roshirlramirezgrocery.com</a><br>
+                    Website: <a href="https://www.roshirlramirezgrocery.com" target="_blank" style="color:var(--footer-accent); text-decoration:underline;">www.roshirlramirezgrocery.com</a>
+                </div>
+                <div style="margin-top:0.6em;">
+                    <strong>Store Hours:</strong> Mon-Sat: 7:30 AM – 6:00 PM | Sun: 8:00 AM – 1:00 PM
+                </div>
+                <div style="margin-top:0.4em;">
+                    <strong>Follow us:</strong> <a href="https://facebook.com/roshirlgroceryhub" target="_blank" style="color:var(--footer-accent);">Facebook</a> |
+                    <a href="https://instagram.com/roshirlgroceryhub" target="_blank" style="color:var(--footer-accent);">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund-policy.html">Refund Policy</a>
+            </div>
+        </div>
+        <div class="footer-meta">
+            TIN: 008-459-672-000 &nbsp;|&nbsp; DTI No.: DTI-ROSHIRL-2022-0915 &nbsp;|&nbsp; Permit No.: 2024-ANT-1870-00011<br>
+            Region IV-A (CALABARZON) | Barangay Clearance: San Roque, Antipolo City
+        </div>
+        <div style="text-align:center; margin-top:0.8em; font-size:0.94rem;">&copy; 2025 Roshirl Ramirez Grocery Hub. All rights reserved.</div>
+    </footer>
+    <!-- Cart + Header + Burger Script + Section Scroll + Cart Modal -->
+    <script>
+        let cart = [];
+        function addToCart(name, price) {
+            const itemIndex = cart.findIndex(item => item.name === name);
+            if (itemIndex > -1) {
+                cart[itemIndex].qty += 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            renderCart();
+        }
+        function renderCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartModalList = document.getElementById('cartModalList');
+            const cartModalTotal = document.getElementById('cartModalTotal');
+            cartModalList.innerHTML = '';
+            let total = 0;
+            let totalCount = 0;
+            if (cart.length === 0) {
+                cartModalList.innerHTML = '<li>Your cart is empty.</li>';
+                cartModalTotal.textContent = 'Total: ₱0.00';
+                cartCount.textContent = '0';
+                return;
+            }
+            cart.forEach(item => {
+                total += item.price * item.qty;
+                totalCount += item.qty;
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${item.name} (₱${item.price.toFixed(2)}) x${item.qty}</span>
+                    <button style="background:var(--danger);color:var(--accent);border:none;border-radius:5px;padding:2px 10px;cursor:pointer;font-size:0.92em;" onclick="removeFromCart('${item.name}')">Remove</button>`;
+                cartModalList.appendChild(li);
+            });
+            cartModalTotal.textContent = `Total: ₱${total.toFixed(2)}`;
+            cartCount.textContent = totalCount;
+        }
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            renderCart();
+        }
+        window.onload = renderCart;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var burgerBtn = document.getElementById('burgerBtn');
+            var navLinks = document.getElementById('navLinks');
+            var mainHeader = document.getElementById('mainHeader');
+            var navLinksAll = navLinks.getElementsByTagName('a');
+            var cartFloatBtn = document.getElementById('cartFloatBtn');
+            var cartModalBg = document.getElementById('cartModalBg');
+            var closeCartModal = document.getElementById('closeCartModal');
+            var checkoutBtnModal = document.getElementById('checkoutBtnModal');
+
+            burgerBtn.addEventListener('click', function() {
+                var open = navLinks.classList.toggle('open');
+                burgerBtn.classList.toggle('open');
+                burgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+
+            function setActiveNav(hash) {
+                for (var i = 0; i < navLinksAll.length; i++) {
+                    navLinksAll[i].classList.remove('active');
+                }
+                var sel = document.querySelector('.nav-links a[href="' + hash + '"]');
+                if (sel) sel.classList.add('active');
+            }
+
+            for (var i = 0; i < navLinksAll.length; i++) {
+                navLinksAll[i].addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        setActiveNav(href);
+                        var target = document.querySelector(href);
+                        if (target) {
+                            if (href === '#hero') {
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            } else {
+                                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }
+                        if (window.innerWidth <= 900 && navLinks.classList.contains('open')) {
+                            navLinks.classList.remove('open');
+                            burgerBtn.classList.remove('open');
+                            burgerBtn.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 12) {
+                    mainHeader.style.boxShadow = '0 6px 24px rgba(34,48,94,0.18)';
+                } else {
+                    mainHeader.style.boxShadow = '0 2px 8px rgba(34,48,94,0.09)';
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 900) {
+                    navLinks.classList.remove('open');
+                    burgerBtn.classList.remove('open');
+                    burgerBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            setActiveNav('#hero');
+
+            // Floating Cart Button
+            cartFloatBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                cartModalBg.classList.add('active');
+            });
+            closeCartModal.addEventListener('click', function(e) {
+                e.preventDefault();
+                cartModalBg.classList.remove('active');
+            });
+            cartModalBg.addEventListener('click', function(e) {
+                if (e.target === cartModalBg) {
+                    cartModalBg.classList.remove('active');
+                }
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === "Escape") {
+                    cartModalBg.classList.remove('active');
+                }
+            });
+
+            // Checkout button redirect
+            checkoutBtnModal.addEventListener('click', function(e) {
+                window.location.href = 'order-summary.html';
+            });
+        });
+    </script>
+</body>
+</html>
