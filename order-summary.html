@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Checkout Summary | Roshirl Ramirez Grocery Hub</title>
+    <meta name="description" content="Review and confirm your grocery order at Roshirl Ramirez Grocery Hub. Secure checkout and personalized service, mobile-friendly and professional.">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,900|Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1d6a44;
+            --secondary: #36d574;
+            --accent: #fff;
+            --navy: #22305e;
+            --danger: #e74c3c;
+            --info: #36b1ff;
+            --border-radius: 16px;
+            --shadow-card: 0 5px 24px rgba(34, 48, 94, 0.13);
+            --shadow-hover: 0 10px 32px rgba(34, 48, 94, 0.23);
+            --gradient-main: linear-gradient(120deg, #36d574 0%, #c7f9e2 100%);
+            --gradient-hero: radial-gradient(circle at 70% 50%, #36d574 0%, #aaffd8 100%);
+            --gradient-footer: linear-gradient(90deg, #22305e 0%, #1d6a44 100%);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4fff7;
+            color: var(--navy);
+        }
+        header {
+            background: var(--accent);
+            box-shadow: 0 2px 8px rgba(34,48,94,0.09);
+            padding: 0;
+            margin: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: box-shadow 0.2s;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 1.3rem;
+            padding: 0.8rem 0;
+        }
+        .logo-block img {
+            height: 52px;
+            width: 52px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: #eafbe5;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 4px 14px rgba(54,213,116,0.10);
+        }
+        .logo-text {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 900;
+            color: var(--navy);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+        main {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .summary-card {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 2.2rem 1.6rem;
+            margin-bottom: 2rem;
+        }
+        .summary-title {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 0.7em;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+        .summary-desc {
+            font-size: 1.11rem;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 1.3em;
+        }
+        .order-info-title {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 1.18rem;
+            color: var(--navy);
+            margin-bottom: 0.6em;
+        }
+        .order-details {
+            margin-bottom: 1.7em;
+        }
+        .order-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.2em;
+        }
+        .order-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7em 0;
+            border-bottom: 1px solid #eafbe5;
+            font-size: 1.07em;
+        }
+        .order-list li span {
+            margin-right: 1em;
+        }
+        .order-total {
+            font-weight: 900;
+            color: var(--secondary);
+            text-align: right;
+            font-size: 1.13em;
+            padding-top: 0.5em;
+        }
+        .customer-form {
+            margin-bottom: 2em;
+        }
+        .customer-form label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.2em;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .customer-form input,
+        .customer-form select,
+        .customer-form textarea {
+            width: 100%;
+            padding: 0.6em 0.9em;
+            border: 1px solid #c7f9e2;
+            border-radius: 7px;
+            font-size: 1em;
+            margin-bottom: 1em;
+            background: #f9fefb;
+            color: var(--navy);
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        .customer-form input:focus,
+        .customer-form select:focus,
+        .customer-form textarea:focus {
+            outline: 2px solid var(--secondary);
+            border-color: var(--secondary);
+        }
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: var(--accent);
+            border: none;
+            border-radius: 8px;
+            padding: 0.9em 0;
+            font-weight: 700;
+            font-size: 1.18em;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            margin-top: 1em;
+            transition: background 0.18s;
+            box-shadow: 0 2px 12px rgba(34,48,94,0.09);
+        }
+        .checkout-btn:hover {
+            background: var(--secondary);
+            color: var(--navy);
+        }
+        .confirmation-popup-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(34,48,94,0.13);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+        .confirmation-popup-bg.active {
+            display: flex;
+        }
+        .confirmation-popup {
+            background: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 18px 38px rgba(34,48,94,0.19);
+            padding: 2rem 1.5rem;
+            min-width: 320px;
+            max-width: 90vw;
+            position: relative;
+            animation: fadeIn 0.33s;
+            text-align: center;
+        }
+        .confirmation-title {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.1em;
+        }
+        .confirmation-message {
+            font-size: 1.13em;
+            color: var(--navy);
+            margin-bottom: 1.5em;
+        }
+        .confirmation-btn {
+            background: var(--secondary);
+            color: var(--navy);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8em 2em;
+            font-weight: 700;
+            font-size: 1.09em;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(54,213,116,0.09);
+            margin-top: 1.2em;
+        }
+        .confirmation-btn:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        .confirmation-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: var(--danger);
+            color: var(--accent);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.1em;
+            width: 32px;
+            height: 32px;
+            line-height: 32px;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .confirmation-close:hover {
+            background: var(--navy);
+        }
+        @media (max-width: 700px) {
+            .container {
+                max-width: 98vw;
+            }
+            .summary-card {
+                padding: 1.2rem 0.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .summary-title {
+                font-size: 1.3rem;
+            }
+            .confirmation-popup {
+                padding: 1rem 0.5rem;
+            }
+        }
+        footer {
+            background: var(--gradient-footer);
+            color: var(--accent);
+            padding: 1.7rem 1rem 1rem 1rem;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            margin-top: 2.2rem;
+        }
+        .footer-main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-info {
+            flex: 2;
+            min-width: 220px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.7em;
+        }
+        .footer-logo img {
+            height: 35px;
+            width: 35px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: var(--footer-accent);
+            border: 2px solid var(--accent);
+        }
+        .footer-logo-text {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 900;
+            font-size: 1.08rem;
+            color: var(--accent);
+        }
+        .footer-links {
+            flex: 1;
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .footer-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--footer-accent);
+        }
+        .footer-meta {
+            font-size: 0.93rem;
+            color: #e0e0e0;
+            margin-top: 1rem;
+        }
+        @media (max-width: 900px) {
+            .footer-main {
+                flex-direction: column;
+                gap: 1.3rem;
+            }
+        }
+        @media (max-width: 600px) {
+            footer {
+                padding: 1.2rem 0.5rem 0.8rem 0.5rem;
+            }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="container nav">
+            <div class="logo-block">
+                <img src="image/LOGO.png" alt="Roshirl Ramirez Grocery Hub Logo">
+                <span class="logo-text">ROSHIRL RAMIREZ<br><span style="font-size: 1.05rem; font-weight: 700; color: var(--secondary); letter-spacing: 0.5px;">GROCERY HUB ONLINE</span></span>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="summary-card">
+                <div class="summary-title">Order Review & Secure Checkout</div>
+                <div class="summary-desc">
+                    Please review your order below. Once you confirm, our dedicated team will reach out to finalize product details, colors, and availability. Afterwards, you’ll receive a secure payment link based on your selected payment method.<br>
+                    <br>
+                    <span style="color:var(--secondary);font-weight:700;">For your convenience, payment must be completed within 24 hours after confirmation.</span>
+                </div>
+
+                <div class="order-details">
+                    <div class="order-info-title">Your Selected Items</div>
+                    <ul class="order-list" id="orderList">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                    <div class="order-total" id="orderTotal">Total: ₱0.00</div>
+                </div>
+                <form class="customer-form" id="customerForm" autocomplete="off">
+                    <label for="custName">Full Name</label>
+                    <input type="text" id="custName" name="custName" required placeholder="Enter your full name">
+
+                    <label for="custPhone">Mobile Number</label>
+                    <input type="tel" id="custPhone" name="custPhone" required placeholder="e.g. +63 999 123 4567" pattern="^(\+63|0)\d{9,10}$">
+
+                    <label for="custEmail">Email Address</label>
+                    <input type="email" id="custEmail" name="custEmail" required placeholder="name@email.com">
+
+                    <label for="custAddress">Delivery Address</label>
+                    <textarea id="custAddress" name="custAddress" required placeholder="Complete address with barangay"></textarea>
+
+                    <label for="payMethod">Preferred Payment Method</label>
+                    <select id="payMethod" name="payMethod" required>
+                        <option value="">Select payment option</option>
+                        <option value="GCash">GCash</option>
+                        <option value="Maya">Maya</option>
+                        <option value="Cash on Delivery">Cash on Delivery</option>
+                    </select>
+                    <button class="checkout-btn" type="submit">Submit Order</button>
+                </form>
+            </div>
+        </div>
+        <div class="confirmation-popup-bg" id="confirmationPopupBg">
+            <div class="confirmation-popup">
+                <button class="confirmation-close" id="confirmationClose" aria-label="Close">&#10005;</button>
+                <div class="confirmation-title">Order Submitted Successfully!</div>
+                <div class="confirmation-message">
+                    Thank you for placing your order.<br><br>
+                    One of our team members will contact you soon to confirm the details, including item colors, stock availability, and any special requests. Please verify all details when contacted.<br><br>
+                    Once confirmed, you’ll receive a secure payment link via your chosen payment method.<br>
+                    <span style="color:var(--danger);font-weight:700;">
+                        Please complete your payment within 24 hours to avoid automatic cancellation.
+                    </span>
+                </div>
+                <button class="confirmation-btn" id="confirmationOk">Back to Home</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-main">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="image/LOGO.png" alt="Roshirl Ramirez Grocery Hub Logo">
+                    <span class="footer-logo-text">ROSHIRL RAMIREZ GROCERY HUB</span>
+                </div>
+                <div>
+                    #37 Ligaya Street, Barangay San Roque, Antipolo, Rizal 1870<br>
+                    Phone: <a href="tel:+639591837266" style="color:var(--footer-accent); text-decoration:underline;">+63 959 183 7266</a><br>
+                    Email: <a href="mailto:info@roshirlramirezgrocery.com" style="color:var(--footer-accent); text-decoration:underline;">info@roshirlramirezgrocery.com</a><br>
+                    Website: <a href="https://www.roshirlramirezgrocery.com" target="_blank" style="color:var(--footer-accent); text-decoration:underline;">www.roshirlramirezgrocery.com</a>
+                </div>
+                <div style="margin-top:0.6em;">
+                    <strong>Store Hours:</strong> Mon-Sat: 7:30 AM – 6:00 PM | Sun: 8:00 AM – 1:00 PM
+                </div>
+                <div style="margin-top:0.4em;">
+                    <strong>Follow us:</strong> <a href="https://facebook.com/roshirlgroceryhub" target="_blank" style="color:var(--footer-accent);">Facebook</a> |
+                    <a href="https://instagram.com/roshirlgroceryhub" target="_blank" style="color:var(--footer-accent);">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="refund-policy.html">Refund Policy</a>
+            </div>
+        </div>
+        <div class="footer-meta">
+            TIN: 008-459-672-000 &nbsp;|&nbsp; DTI No.: DTI-ROSHIRL-2022-0915 &nbsp;|&nbsp; Permit No.: 2024-ANT-1870-00011<br>
+            Region IV-A (CALABARZON) | Barangay Clearance: San Roque, Antipolo City
+        </div>
+        <div style="text-align:center; margin-top:0.8em; font-size:0.94rem;">&copy; 2025 Roshirl Ramirez Grocery Hub. All rights reserved.</div>
+    </footer>
+    <script>
+        // Example: Simulate products (in practice, fetch from cart/session)
+        var orderProducts = [
+            { name: "Fresh Tomatoes", price: 30.99, qty: 2 },
+            { name: "Premium Rice (Bigas)", price: 49.50, qty: 1 },
+            { name: "Banana Chips", price: 25.00, qty: 3 }
+        ];
+        function renderOrderList() {
+            var orderList = document.getElementById('orderList');
+            var orderTotal = document.getElementById('orderTotal');
+            orderList.innerHTML = '';
+            let total = 0;
+            orderProducts.forEach(function(item) {
+                total += item.price * item.qty;
+                var li = document.createElement('li');
+                li.innerHTML = `<span>${item.name} x${item.qty}</span><span>₱${(item.price * item.qty).toFixed(2)}</span>`;
+                orderList.appendChild(li);
+            });
+            orderTotal.textContent = `Total: ₱${total.toFixed(2)}`;
+        }
+        renderOrderList();
+
+        // Handle checkout form submission
+        document.getElementById('customerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('confirmationPopupBg').classList.add('active');
+        });
+
+        // Popup close/back to home
+        document.getElementById('confirmationOk').onclick = function() {
+            document.getElementById('confirmationPopupBg').classList.remove('active');
+            window.location.href = "index.html";
+        };
+        document.getElementById('confirmationClose').onclick = function() {
+            document.getElementById('confirmationPopupBg').classList.remove('active');
+        };
+        document.getElementById('confirmationPopupBg').onclick = function(e) {
+            if (e.target === this) {
+                document.getElementById('confirmationPopupBg').classList.remove('active');
+            }
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                document.getElementById('confirmationPopupBg').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
